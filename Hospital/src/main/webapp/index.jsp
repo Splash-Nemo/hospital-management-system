@@ -11,5 +11,6 @@
 	<jsp:include page="components/navbar.jsp"></jsp:include>
 	<jsp:include page="components/carousel.jsp"></jsp:include>
 	<jsp:include page="components/features.jsp"></jsp:include>
+	<jsp:include page="components/teams.jsp"></jsp:include>
 </body>
 </html>

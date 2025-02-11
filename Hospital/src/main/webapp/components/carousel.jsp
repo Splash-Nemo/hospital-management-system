@@ -27,7 +27,7 @@
 	<div class="carousel-inner">
 		<div class="carousel-item active">
 			<img src="<%=application.getContextPath()%>/images/img-5.jpg"
-				class="d-block w-100" alt="...">
+				class="d-block w-100" alt="<%=application.getContextPath()%>/images.user.jpg">
 			<div class="carousel-caption d-none d-md-block text-start">
 				<h5 class="fs-3 fw-bolder my-3">Revolutionizing Cancer
 					Treatment: CAR T Cell Therapy</h5>
@@ -43,7 +43,7 @@
 		</div>
 		<div class="carousel-item text-start">
 			<img src="<%=application.getContextPath()%>/images/img-3.jpg"
-				class="d-block w-100" alt="...">
+				class="d-block w-100" alt="<%=application.getContextPath()%>/images.user.jpg">
 			<div class="carousel-caption d-none d-md-block text-start">
 				<h5 class="fs-3 fw-bolder my-3">Revolutionizing Cancer
 					Treatment: CAR T Cell Therapy</h5>
@@ -59,7 +59,7 @@
 		</div>
 		<div class="carousel-item text-start">
 			<img src="<%=application.getContextPath()%>/images/img-4.jpg"
-				class="d-block w-100" alt="...">
+				class="d-block w-100" alt="<%=application.getContextPath()%>/images.user.jpg">
 			<div class="carousel-caption d-none d-md-block text-start">
 				<h5 class="fs-3 fw-bolder my-3">Revolutionizing Cancer
 					Treatment: CAR T Cell Therapy</h5>
