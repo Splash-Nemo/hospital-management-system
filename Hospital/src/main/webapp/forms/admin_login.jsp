@@ -32,6 +32,9 @@
 								<input type="password" class="form-control"
 									id="exampleInputPassword1">
 							</div>
+							<div class="mb-3">
+								Don't have an account? <a href="register.jsp">Click Here</a>
+							</div>
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
 					</div>
