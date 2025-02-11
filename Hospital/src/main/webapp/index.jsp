@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Index</title>
+<title>Home Page</title>
 <jsp:include page="links.jsp"></jsp:include>
 </head>
 <body>
