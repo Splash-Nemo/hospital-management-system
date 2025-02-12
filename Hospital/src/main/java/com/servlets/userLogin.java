@@ -8,55 +8,54 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import com.DAO.DAO;
 import com.database.DBconnect;
 import com.entities.User;
 
-@WebServlet("/userRegister")
-public class userRegister extends HttpServlet {
+@WebServlet("/userLogin")
+public class userLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public userRegister() {
+	public userLogin() {
 		super();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String name = request.getParameter("name");
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
 		HttpSession session = request.getSession();
 
-		if (name == null || name.isEmpty() || email == null || email.isEmpty() || password == null
-				|| password.isEmpty()) {
-
-			session.setAttribute("reg-msg", "All Fields are Mandatory");
-			response.sendRedirect("fomrs/register.jsp");
+		if (email==null || password==null || email.isEmpty() || password.isEmpty()) {
+			session.setAttribute("user-msg", "All fields are mandatory");
+			
+			// Later set redirect to user-dashboard
+			response.sendRedirect("forms/user_login.jsp");
+			
 			return;
 		}
 
-		User user = new User(name, email, password);
+		User user = new User(email, password);
 		DAO dao = null;
 
 		boolean bool = false;
 		try {
 			dao = new DAO(DBconnect.getConnection());
-			bool = dao.userRegister(user);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			bool = dao.userLogin(user);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		if (bool) {
-			session.setAttribute("reg-msg", "Registered Successfully");
-			response.sendRedirect("forms/register.jsp");
-		} else {
-			session.setAttribute("reg-msg", "Email ID exists");
-			response.sendRedirect("forms/register.jsp");
+		
+		if(bool) {
+			session.setAttribute("user-msg", "Valid Credentials");
+			// Later set redirect to user-dashboard
+			response.sendRedirect("forms/user_login.jsp");
+		}else {
+			session.setAttribute("user-msg", "Invalid Credentials");
+			response.sendRedirect("forms/user_login.jsp");
 		}
 	}
 }

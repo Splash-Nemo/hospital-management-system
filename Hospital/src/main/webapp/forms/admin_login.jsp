@@ -19,7 +19,7 @@
 				<div class="col-md-8 ">
 					<div class="card-body">
 						<h5 class="card-title text-center">Admin Login</h5>
-						<form action="#" method="post">
+						<form action="<%= application.getContextPath() %>/adminLogin" method="post">
 							<div class="mb-3">
 								<label for="exampleInputEmail1" class="form-label">Email
 									address</label> <input type="email" class="form-control"
@@ -41,6 +41,17 @@
 				</div>
 			</div>
 		</div>
+		<%
+		String msg = (String) session.getAttribute("admin-msg");
+		if (msg != null) {
+		%>
+		<p class="text-center text-success">
+			<%=msg%>
+		</p>
+		<%
+		session.removeAttribute("admin-msg");
+		}
+		%>
 	</div>
 </body>
 </html>
