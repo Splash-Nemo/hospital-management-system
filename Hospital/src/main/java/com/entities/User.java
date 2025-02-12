@@ -18,6 +18,12 @@ public class User {
 		this.password= password;
 	}
 	
+	public User(String name, String email, String password) {
+		this.name= name;
+		this.password= password;
+		this.email= email;
+	}
+	
 	public void setHospitalID(int hospitalID) {
 		this.hospitalID= hospitalID;
 	}
