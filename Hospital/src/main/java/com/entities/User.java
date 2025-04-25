@@ -8,10 +8,20 @@ public class User {
 	private String name;
 	private String email;
 	private String password;
+	private String type;
 	
-	public User() {}
+	public User() {
+		super();
+	}
 	
 	public User(int hospitalID, String name, String email, String password) {
+		this.email= email;
+		this.hospitalID= hospitalID;
+		this.name= name;
+		this.password= password;
+	}
+	
+	public User(int hospitalID, String name, String email) {
 		this.email= email;
 		this.hospitalID= hospitalID;
 		this.name= name;
@@ -29,8 +39,16 @@ public class User {
 		this.email= email;
 	}
 	
-	public void setHospitalID(int hospitalID) {
-		this.hospitalID= hospitalID;
+	public User(String name, String email, String password, String type) {
+		// TODO Auto-generated constructor stub
+		this.type= type;
+		this.name= name;
+		this.password= password;
+		this.email= email;
+	}
+
+	public void setHospitalID(int string) {
+		this.hospitalID= string;
 	}
 	
 	public int getHospitalID() {
@@ -47,6 +65,10 @@ public class User {
 	
 	public void setPassword(String password) {
 		this.password= password;
+	}
+	
+	public String getID() {
+		return Integer.toString(hospitalID);
 	}
 	
 	public String getName() {

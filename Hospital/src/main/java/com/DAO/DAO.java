@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.entities.User;
 import com.entities.userID;
@@ -15,10 +17,11 @@ public class DAO {
 		this.conn = conn;
 	}
 
-	public boolean ifExists(String email) throws SQLException {
-		String checkQuery = "SELECT COUNT(*) FROM hospital_data WHERE Email = ?";
+	public boolean ifExists(String email, String type) throws SQLException {
+		String checkQuery = "SELECT COUNT(*) FROM hospital_data WHERE Email = ? AND TYPE=?";
 		PreparedStatement checkStm = conn.prepareStatement(checkQuery);
 		checkStm.setString(1, email);
+		checkStm.setString(2, type);
 
 		ResultSet check = checkStm.executeQuery();
 		if (check.next() && check.getInt(1) > 0) {
@@ -48,17 +51,18 @@ public class DAO {
 			hospitalID = userID.userIDGenerator();
 		}
 
-		if (ifExists(user.getMail())) {
+		if (ifExists(user.getMail(),"user")) {
 			return false;
 		}
 
-		String query = "INSERT INTO hospital_data(hospital_ID, Name, Email, Password) VALUES (?,?,?,?)";
+		String query = "INSERT INTO hospital_data(hospital_ID, Name, Email, Password, Type) VALUES (?,?,?,?,?)";
 
 		PreparedStatement prep = conn.prepareStatement(query);
 		prep.setInt(1, hospitalID);
 		prep.setString(2, user.getName());
 		prep.setString(3, user.getMail());
 		prep.setString(4, user.getPassword());
+		prep.setString(5, "user");
 
 		int rowAffected = prep.executeUpdate();
 		return rowAffected > 0;
@@ -67,7 +71,7 @@ public class DAO {
 	public boolean userLogin(User user) throws SQLException {
 		// Later add to check if the email id is for normal user, or admin, or doctor
 		// String status= "User";
-		if (ifExists(user.getMail())) {
+		if (ifExists(user.getMail(), "user")) {
 			return true;
 		}
 
@@ -77,20 +81,51 @@ public class DAO {
 	public boolean adminLogin(User user) throws SQLException {
 		// Later add to check if the email id is for normal user, or admin, or doctor
 		// String status= "Admin";
-		if (ifExists(user.getMail())) {
+		if (ifExists(user.getMail(), "admin")) {
 			return true;
 		}
 
 		return false;
 	}
+	
+	public boolean adminRegister(User user) throws SQLException {
+		int hospitalID = userID.userIDGenerator();
 
-	public boolean doctorLogin(User user) throws SQLException {
-		// Later add to check if the email id is for normal user, or admin, or doctor
-		// String status= "Doctor";
-		if (ifExists(user.getMail())) {
-			return true;
+		while (ifIdExists(hospitalID)) {
+			hospitalID = userID.userIDGenerator();
 		}
 
-		return false;
+		if (ifExists(user.getMail(),"admin")) {
+			return false;
+		}
+
+		String query = "INSERT INTO hospital_data(hospital_ID, Name, Email, Password, Type) VALUES (?,?,?,?,?)";
+
+		PreparedStatement prep = conn.prepareStatement(query);
+		prep.setInt(1, hospitalID);
+		prep.setString(2, user.getName());
+		prep.setString(3, user.getMail());
+		prep.setString(4, user.getPassword());
+		prep.setString(5, "admin");
+
+		int rowAffected = prep.executeUpdate();
+		return rowAffected > 0;
+	}
+	
+	public List<User> getUsers() throws SQLException{
+		List<User> userList= new ArrayList<>();
+		
+		String query= "Select * from hms.hospital_data where type= ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, "user");
+				
+		ResultSet rs= ps.executeQuery();
+		while(rs.next()) {
+			User user= new User(rs.getString(2), rs.getString(3), rs.getString(4));
+			user.setHospitalID(Integer.parseInt(rs.getString(1)));
+			userList.add(user);
+		}
+		
+		return userList;
 	}
 }

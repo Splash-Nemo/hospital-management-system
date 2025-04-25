@@ -1,4 +1,4 @@
-package com.servlets;
+package com.users.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +34,7 @@ public class userRegister extends HttpServlet {
 				|| password.isEmpty()) {
 
 			session.setAttribute("reg-msg", "All Fields are Mandatory");
-			response.sendRedirect("fomrs/register.jsp");
+			response.sendRedirect("forms/register.jsp");
 			return;
 		}
 

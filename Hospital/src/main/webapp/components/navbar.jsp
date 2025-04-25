@@ -11,9 +11,6 @@
           <a class="nav-link" href="<%= application.getContextPath()%>/forms/admin_login.jsp"><i class="fa-solid fa-right-to-bracket mx-2"></i> Admin Login</a>
         </li>
         <li class="nav-item mx-2">
-          <a class="nav-link" href="<%= application.getContextPath()%>/forms/doctor_login.jsp">Doctor Login</a>
-        </li>
-        <li class="nav-item mx-2">
           <a class="nav-link" href="<%= application.getContextPath()%>/forms/user_login.jsp">User Login</a>
         </li>
       </ul>
